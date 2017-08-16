@@ -1,0 +1,74 @@
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	</head>
+	<body>
+	<script src="../js/main.js">
+	</script>
+
+	<div id="myDIV" class="header">
+	  <h2 style="margin:5px">Toy Robot Simulator</h2>
+	 
+	  <textarea id="command_list" name="textarea" style="width:250px;height:150px;" placeholder="Enter Commands Here..."></textarea>
+
+	  <span onclick="checkCommands()" class="addBtn">Add</span>
+	</div>
+
+	<ul id="myUL">
+	   
+	   
+	</ul>
+
+	<script>
+	    //override log function
+	Logger.log  = function( message, message_type)
+	{
+		if( message_type ==0 || message_type == null || message_type == undefined) //LOG
+			newElement(message, 'log');
+
+		if(message_type == 1)//Error
+			newElement(message, "error");
+
+	};
+
+	function clearChildNodes(parent)
+	{
+		if(parent)
+		while (parent.firstChild)  
+		    parent.removeChild(parent.firstChild);
+
+	}
+	
+	function checkCommands () 
+	{
+		var command_list = document.getElementById("command_list").value;
+		
+		if (command_list === '') 
+		{
+			alert("You must Enter Command sequence!");
+			return;
+		}     
+		clearChildNodes(document.getElementById("myUL"));
+		var controller = new RobotController(new Robot()); 
+		var parser = new CommandParser();
+		//console.log(command_list);
+		if(command_list!=null && command_list.length >0)
+			parser.parseText(command_list, controller);
+
+	}
+	 
+	function newElement(inputValue, _class) 
+	{
+		var li = document.createElement("li");
+		var t = document.createTextNode(inputValue);
+		li.className = _class;
+		li.appendChild(t);
+		
+	
+
+	}
+	</script>
+
+	</body>
+	</html>
