@@ -377,4 +377,11 @@ Logger.log  = function( message, message_type)
 
 };
 
+exports.Robot  = Robot;
+exports.RobotController  = RobotController;
+exports.CommandParser  = CommandParser;
+exports.Logger  = Logger;
+
+
+
 
