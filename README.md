@@ -8,18 +8,20 @@ Toy Robot Simulator
 prevented from falling to destruction. 
   - Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
 
-##Tech/framework used
-###Built with
+ ## Tech/framework used ##
+
+###Built with###
 This application was developed using Javascript. 
-###Testing
+
+###Testing###
   - HTML UI: html/test.html.
 
 ```
-        var controller = new RobotController(new Robot()); 
-		var parser = new CommandParser();
-		//console.log(command_list);
-		if(command_list!=null && command_list.length >0)
-			parser.parseText(command_list, controller);
+var controller = new RobotController(new Robot()); 
+var parser = new CommandParser();
+
+if(command_list!=null && command_list.length >0)
+	parser.parseText(command_list, controller);
 ```
   - Node: node/test-node.js *filename*
 
