@@ -17,9 +17,9 @@ This application was developed using Javascript.
   **Testing**
   
   - Automated Unit Tests are run using Jasmine - node
-	    -node/jasmin-test/RobotSpec.js
-	    -node/jasmin-test/RobotContSpec.js
-	    -node/jasmin-test/ParserSpec.js
+	    -node/jasmin-test/RobotSpec.js.
+	    -node/jasmin-test/RobotContSpec.js.
+	    -node/jasmin-test/ParserSpec.js.
 
   - HTML UI: html/test.html.
 
