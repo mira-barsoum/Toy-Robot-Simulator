@@ -1,0 +1,21 @@
+{
+  "name": "Toy_Ropot_Simulator",
+  "version": "1.0.0",
+  "description": "The application is a simulation of a toy robot moving on a square tabletop, of dimensions 5 units x 5 units",
+  "main": "test-node.js",
+  "dependencies": {
+    "jasmine": "^2.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": 
+	{
+		"type": "git",
+		"url": "https://github.com/mira-barsoum/Toy-Robot-Simulator.git"
+	},
+  "keywords": [],
+  "author": "Mira Barsoum <miras79@gmail.com>",
+  "license": "ISC"
+}

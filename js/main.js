@@ -304,7 +304,6 @@ CommandParser.prototype.parseText = function(commands_text, controller)
 			if(result!== 0)
 			{
 				Logger.log(result, 1);//Error
-				this.validPlacement = false;
 				 
 			}
 
@@ -383,5 +382,8 @@ exports.CommandParser  = CommandParser;
 exports.Logger  = Logger;
 
 
-
+exports.FACING_NORTH = FACING_NORTH;
+exports.FACING_EAST  = FACING_EAST ;
+exports.FACING_SOUTH = FACING_SOUTH;
+exports.FACING_WEST =  FACING_WEST ; 
 

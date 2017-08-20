@@ -10,10 +10,17 @@ prevented from falling to destruction.
 
  ## Tech/framework used ##
 
-###Built with###
+**Built with**
+
 This application was developed using Javascript. 
 
-###Testing###
+  **Testing**
+  
+  - Automated Unit Tests are run using Jasmine - node
+	    -node/jasmin-test/RobotSpec.js
+	    -node/jasmin-test/RobotContSpec.js
+	    -node/jasmin-test/ParserSpec.js
+
   - HTML UI: html/test.html.
 
 ```
@@ -32,4 +39,3 @@ var parser = new _robot_handler.CommandParser();
 if(command_list!=null && command_list.length >0)
 	parser.parseText(command_list, controller);
 ```
- 
