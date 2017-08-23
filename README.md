@@ -45,3 +45,26 @@ var parser = new _robot_handler.CommandParser();
 if(command_list!=null && command_list.length >0)
   parser.parseText(command_list, controller);
 ```
+**Running The Test**
+
+ - HTML Test:
+     1. Open file html/test.html.
+     2. Type Commands in Command area.
+     3. Press Add button.
+     4. Output will show up in the list below.
+ - Node Test:
+     1. Make sure nodejs is installed and running on your machine [ "Node Installation"](https://www.tutorialspoint.com/nodejs/nodejs_environment_setup.htm).
+     2. Switch command line to node folder.
+     3. Install the Package by running `npm install`.
+     4. For input file test: `node test-node.js filename`
+     5. For automated test: run test files in Jasmine Spec folder:
+       
+   - node jasmin-test/RobotSpec.js
+   - node jasmin-test/RobotContSpec.js
+   - node jasmin-test/ParserSpec.js
+        
+      
+
+       
+
+    
