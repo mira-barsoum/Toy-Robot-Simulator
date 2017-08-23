@@ -4,8 +4,8 @@
 	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 	</head>
 	<body>
-	<script src="../js/main.js">
-	</script>
+	<script>var exports = {};</script>>
+	<script src="../js/main.js"></script>
 
 	<div id="myDIV" class="header">
 	  <h2 style="margin:5px">Toy Robot Simulator</h2>
@@ -65,7 +65,7 @@
 		var t = document.createTextNode(inputValue);
 		li.className = _class;
 		li.appendChild(t);
-		
+		document.getElementById("myUL").appendChild(li);
 	
 
 	}
