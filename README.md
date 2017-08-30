@@ -9,11 +9,12 @@ prevented from falling to destruction.
  - Any movement that would result in the robot falling from the table must be prevented, however further valid movement commands must still be allowed.
  - This simulator application takes input in form of text commands of the following form 
 
-> `PLACE X,Y,F 
-> MOVE 
-> LEFT  
-> RIGHT  
-> REPORT`
+ `
+  PLACE X,Y,F 
+  MOVE 
+  LEFT  
+  RIGHT  
+  REPORT`
 
 . PLACE will put the toy robot on the table in position X,Y and facing NORTH, SOUTH, EAST or WEST.
 . The origin (0,0) can be considered to be the SOUTH WEST most corner.
@@ -32,8 +33,8 @@ This application was developed using Javascript.
 **Input Sample**
 
     PLACE 0,0,NORTH
-  MOVE
-  REPORT
+    MOVE
+    REPORT
 **Output**: 0,1,NORTH
 
   **Simulator Testing**
