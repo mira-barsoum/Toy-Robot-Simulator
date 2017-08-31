@@ -44,6 +44,7 @@ This application was developed using Javascript.
      2. Switch command line to node folder.
      3. Install the Package by running `npm install`.
      4. For input file test: `node test-node.js filename`
+         Test files are provided under node/test_files folder. Each file is named after its expected output.
      
  - Automated test: run test files in Jasmine Spec folder:       
    - node jasmin-test/RobotSpec.js
