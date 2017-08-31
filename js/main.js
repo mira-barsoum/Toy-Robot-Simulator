@@ -12,33 +12,6 @@ const TABLE_HEIGHT= 5;
 
 
 const DEBUG = true;
-/* ==================== TRUTILS ==================== */
-
-/**
- *  @class
- *  <p>General utility class</p>
- */
-
-function TRUtils () {
-};
-
-
-/**
- *  Indicates whether an object implements a given method, useful to check if a delegate
- *  object implements a given delegate method.
- *  
- *  @param {Object} object The object purported to implement a given method.
- *  @param {String} methodNameAsString The method name as a <code>String</code>.
- *
- *  @returns {bool} Whether the object implements the given method.
- */
-TRUtils.objectHasMethod = function (object, methodNameAsString) {
-  return (  object !== null &&
-            object !== undefined &&
-            object[methodNameAsString] !== undefined &&
-            typeof object[methodNameAsString] == 'function'
-         );
-};
 /* ==================== ROBOT ==================== */
 
 /**
@@ -67,109 +40,51 @@ const FACING_SOUTH = 2;
 const FACING_WEST = 3; 
 const TABLE_DIRECTIONS  = [ 'NORTH' , 'EAST'  , 'SOUTH','WEST'  ];
 
-
-Robot.Wraps = [ 'x', //Horizontal placement of the robot.
-				'y', //Vertical placement of the robot.
-				'f' //Facing  NORTH,SOUTH, EAST or WEST. 
-				];
-function Robot () 
-{
-
-
+ class Robot {
+    constructor () {
 	this._x = 0;
 	this._y = 0;
 	this._f = 0;
 
-	for(var i = 0; i< Robot.Wraps.length; i++)
-   	 this.defineProperty(Robot.Wraps[i]);
-   	return this;
-};
-Robot.prototype = Object.create(Object.prototype);
-
-
-Robot.prototype.defineProperty = function ( propertyName) {
-  var camel_ready = propertyName.charAt(0).toUpperCase() + propertyName.substr(1);
-  var getter_name = 'get' + camel_ready;
-  var setter_name = 'set' + camel_ready;
-  
-  // check on function availability
-  var has_getter = TRUtils.objectHasMethod(this, getter_name);
-  var has_setter = TRUtils.objectHasMethod(this, setter_name);
- 
-  
-  if (has_setter) {
-    var specified_setter_function = function (newValue) {
-      this[setter_name].call(this, newValue);
+    }
+    set X  (x)  {
+		  if(x < TABLE_H_OFFSET || x >= TABLE_H_OFFSET + TABLE_WIDTH)
+		      return this.ignore("X =  " + x) ;
+		  this._x = x;
+		}
+    get X  ()       { return this._x;               }
+    set Y (y) {
+		if(y < TABLE_V_OFFSET || y >= TABLE_V_OFFSET + TABLE_HEIGHT)
+			    return this.ignore("Y =  " + y) ;
+			    
+		    this._y = y;
+	      }
+    get Y ()       { return this._y; }
+    
+    
+    set F (f) {
+	
+	if(f < FACING_NORTH || f > FACING_WEST)
+		return this.ignore("Wrong direction: " + f) ;
       
-    };
-    specified_setter_function.displayName = 'Specified setter for .' + propertyName + ' on ' + this.constructor.name;
-    this.__defineSetter__(camel_ready, specified_setter_function);
-  }
-  // otherwise just assign to _propertyName
-  else {
-    var default_setter_function = function (newValue) {
-      this['_' + propertyName] = newValue;
-      
-    };
-    default_setter_function.displayName = 'Default setter for .' + propertyName + ' on ' + this.constructor.name;
-    this.__defineSetter__(camel_ready, default_setter_function);
-  }
-  
-  // assign the getter function if we have one
-   if (has_getter) {
-    this.__defineGetter__(camel_ready, this[getter_name]);
-  }
-  // otherwise just return _propertyName
-  else {
-    var default_getter_function = function () {
-      return this['_' + propertyName];
-    };
-    default_getter_function.displayName = 'Default getter for .' + propertyName + ' on ' + this.constructor.name;
-    this.__defineGetter__(camel_ready, default_getter_function);
-  }
-   var _this = this;
-	this.__defineGetter__('Facing', function() { 
-		return TABLE_DIRECTIONS[_this._f]; });
+	this._f = f;
+	 
+    }
 
-};
-
-
-Robot.prototype.ignore = function (error) {
+    get F() {return  this._f;}
+    get Facing() {return TABLE_DIRECTIONS[this._f];}
+    
+    ignore (error) {
 	 
 	throw 'Invalid placement: ' + error; 
 	return -1;
-};
+    }
+  
 
-Robot.prototype.setX = function (newValue) {
+}				 
+ 
 
-	if(newValue < TABLE_H_OFFSET || newValue >= TABLE_H_OFFSET + TABLE_WIDTH)
-		return this.ignore("X =  " + newValue) ;
-
-	this._x = newValue;
- };
-
-
-
-Robot.prototype.setY = function (newValue) {
-
-	if(newValue < TABLE_V_OFFSET || newValue >= TABLE_V_OFFSET + TABLE_HEIGHT)
-		return this.ignore("Y =  " + newValue) ;
-	 	
-	this._y = newValue;
-	 
- };
-
-
-
-Robot.prototype.setF = function (newValue) {
-	
-	if(newValue < FACING_NORTH || newValue > FACING_WEST)
-		return this.ignore("Wrong direction: " + newValue) ;
-	
-
-	this._f = newValue;
-	 
- };
+ 
 
  
 
@@ -187,14 +102,15 @@ Robot.prototype.setF = function (newValue) {
  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the robot.
  * REPORT will announce the X,Y and F of the robot. This can be in any form, but standard output is sufficient</p>
  */
+class RobotController {
+    constructor (robot) {
+	this.robot = robot;	 
 
-function RobotController (_robot) 
-{
 
-	this.robot = _robot;	 
-};
-
-RobotController.prototype.Place = function(x,y,f)
+    }
+    
+     
+Place(x,y,f)
 {
 
  	var placement = {x: this.robot.X , y: this.robot.Y ,f: this.robot.F };
@@ -215,21 +131,14 @@ RobotController.prototype.Place = function(x,y,f)
         return -1;
 	}
 	return 0 ;
-};
+}
+LEFT()  {  this.robot.F = (this.robot.F == FACING_NORTH)? FACING_WEST: this.robot.F -1; }
 
-RobotController.prototype.LEFT = function()
-{
-	 this.robot.F = (this.robot.F == FACING_NORTH)? FACING_WEST: this.robot.F -1;
-};
+RIGHT() { this.robot.F = (this.robot.F == FACING_WEST)? FACING_NORTH: this.robot.F + 1;  };
 
-RobotController.prototype.RIGHT = function()
+Move()
 {
-	 this.robot.F = (this.robot.F == FACING_WEST)? FACING_NORTH: this.robot.F + 1;
-};
-
-RobotController.prototype.Move = function()
-{
-	 switch(this.robot.F) {
+    switch(this.robot.F) {
     case  FACING_NORTH:
     	 return this.Place(this.robot.X, this.robot.Y + 1, this.robot.F) ;
         break;
@@ -249,15 +158,12 @@ RobotController.prototype.Move = function()
         break;
     default:
          
+  }
+
 }
 
-};
-
-RobotController.prototype.Report = function()
-{ 
-	return (this.robot.X +","+ this.robot.Y +","+ this.robot.Facing).toString();
-   
-};
+Report() {  return (this.robot.X +","+ this.robot.Y +","+ this.robot.Facing).toString(); }
+}
 /*
  *  The Input Commands.
  *  @constant
@@ -276,13 +182,13 @@ const COMMAND_REPORT  = "REPORT";
  *  <p>Command Parser</p>
  */
 
-function CommandParser()
+class CommandParser
 {
-	this.validPlacement = false;
-	return this;
-}
+    constructor ( ) {
+      this.validPlacement = false;
 
-CommandParser.prototype.parseText = function(commands_text, controller)
+    }
+parseText(commands_text, controller)
 {
 		var lines = commands_text.split('\n');
 		var commands = [];
@@ -313,7 +219,7 @@ CommandParser.prototype.parseText = function(commands_text, controller)
 
 };
 
-CommandParser.prototype.parseCommand = function(command_text, controller)
+parseCommand(command_text, controller)
 {
 	var args  = command_text.replace(/,/g,' ').split(' ');
 	for(var i=0; i<args.length; i++)
@@ -355,7 +261,7 @@ CommandParser.prototype.parseCommand = function(command_text, controller)
 	}
 	return 0;
 };
-
+}
 
 //* ==================== Logger ==================== */
 
@@ -364,18 +270,18 @@ CommandParser.prototype.parseCommand = function(command_text, controller)
  *  <p>Logger</p>
  */
 
-Logger = {};
-//default logger using console. ovveride by UI
-Logger.log  = function( message, message_type)
-{
-	if( message_type ==0 || message_type == null || message_type == undefined) //LOG
-		console.log(message);
-
-	if(message_type == 1 )//Error
-		console.error(message);
-
-};
-
+class Logger  {
+  constructor ( ) { }
+  log( message, message_type)
+  {
+	  if( message_type ==0 || message_type == null || message_type == undefined) //LOG
+		  console.log(message);
+  
+	  if(message_type == 1 )//Error
+		  console.error(message);
+  
+  };
+}
 exports.Robot  = Robot;
 exports.RobotController  = RobotController;
 exports.CommandParser  = CommandParser;
